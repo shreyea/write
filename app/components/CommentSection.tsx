@@ -23,7 +23,7 @@ export default function CommentSection({
             <User size={16} className="text-white" />
           </div>
           <div className="flex-1 bg-white/5 rounded-xl p-3 border border-white/10">
-            <span className="font-semibold text-purple-300 text-sm">
+            <span className="font-semibold text-[#A5B4FC] text-sm">
               @{c.profiles?.username}
             </span>
             <p className="text-white/80 text-sm mt-1">{c.content}</p>
@@ -39,20 +39,20 @@ export default function CommentSection({
           setText("");
           router.refresh();
         }}
-        className="flex gap-2 mt-3"
+        className="flex flex-wrap gap-2 mt-3"
       >
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Add a comment..."
-          className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm outline-none text-white placeholder-white/40 focus:border-purple-500/50 transition-all"
+          className="flex-1 min-w-[200px] bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm outline-none text-white placeholder-white/40 focus:border-[#A5B4FC]/50 transition-all"
         />
         <button 
           type="submit"
-          className="px-4 py-2 bg-purple-500/20 text-purple-300 rounded-xl text-sm font-semibold hover:bg-purple-500/30 transition-all border border-purple-500/30 flex items-center gap-2"
+          className="px-3 sm:px-4 py-2 bg-[#A5B4FC]/20 text-[#A5B4FC] rounded-xl text-sm font-semibold hover:bg-[#A5B4FC]/30 transition-all border border-[#A5B4FC]/30 flex items-center gap-1.5 shrink-0"
         >
           <Send size={16} />
-          Send
+          <span className="hidden sm:inline">Send</span>
         </button>
       </form>
     </div>

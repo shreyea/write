@@ -30,7 +30,7 @@ export default function PostComposer() {
       className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl hover:shadow-2xl transition-all duration-300"
     >
       <div className="flex items-start gap-2 sm:gap-3 mb-3 sm:mb-4">
-        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center shrink-0">
+        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-linear-to-br from-[#A5B4FC] to-[#C8A2C8] flex items-center justify-center shrink-0">
           <Edit3 size={16} className="sm:w-5 sm:h-5 text-white" />
         </div>
         <textarea
@@ -41,8 +41,8 @@ export default function PostComposer() {
           rows={3}
         />
       </div>
-      <div className="flex justify-between items-center gap-2">
-        <label className="cursor-pointer px-3 sm:px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/20 transition-all text-xs sm:text-sm text-white/70 hover:text-white flex items-center gap-1.5 sm:gap-2">
+      <div className="flex flex-wrap justify-between items-center gap-2">
+        <label className="cursor-pointer px-3 sm:px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/20 transition-all text-xs sm:text-sm text-white/70 hover:text-white flex items-center gap-1.5 sm:gap-2 shrink-0">
           <input 
             type="file" 
             onChange={e => setFile(e.target.files?.[0])} 
@@ -54,10 +54,10 @@ export default function PostComposer() {
         </label>
         <button 
           type="submit" 
-          className="px-4 sm:px-6 py-2 bg-gradient-to-r from-[#A5B4FC] to-[#C8A2C8] rounded-xl font-semibold text-white shadow-lg hover:shadow-[#A5B4FC]/50 transition-all duration-300 hover:scale-105 flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base"
+          className="px-3 sm:px-6 py-2 bg-linear-to-r from-[#A5B4FC] to-[#C8A2C8] rounded-xl font-semibold text-white shadow-lg hover:shadow-[#A5B4FC]/50 transition-all duration-300 hover:scale-105 flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base shrink-0"
         >
           <Send size={16} className="sm:w-[18px] sm:h-[18px]" />
-          Post
+          <span>Post</span>
         </button>
       </div>
     </form>

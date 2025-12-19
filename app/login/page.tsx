@@ -30,6 +30,7 @@ export default function Login() {
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        router.refresh();
         router.push("/feed");
       }
     } catch (err: any) {
