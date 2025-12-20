@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Lock, MessageCircle, Users, Sparkles, Zap, Heart } from "lucide-react";
+import { Lock, MessageCircle, Users, Sparkles, Zap, Heart, Unlock, User } from "lucide-react";
 import BlurText from "./components/BlurText";
 import BentoCard from "./components/BentoCard";
 import Antigravity from "./components/Antigravity";
@@ -79,20 +79,20 @@ export default function Landing() {
   
           {/* Hero Section */}
           <div className="text-center mb-12 md:mb-20">
-            <BlurText
-              text="Your Vibe. Your Tribe."
-              delay={80}
-              animateBy="words"
-              direction="top"
-              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-4 md:mb-6 bg-gradient-to-br from-[#FEFBF3] via-[#A5B4FC] to-[#C8A2C8] bg-clip-text text-transparent"
-            />
-            <BlurText
-              text="Share daily updates with those who matter most"
-              delay={50}
-              animateBy="words"
-              direction="top"
-              className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#EADEE7]/80 font-light mb-8 md:mb-12 px-4"
-            />
+    
+            <div className="mb-12 md:mb-20 flex justify-center">
+  <BlurText
+    text="A transparent space to share your thoughts with the real world."
+    delay={50}
+    animateBy="words"
+    direction="top"
+    className="block w-full max-w-4xl
+               text-base sm:text-lg md:text-xl lg:text-2xl
+               text-[#EADEE7]/80 font-light
+               px-30 text-center"
+  />
+</div>
+
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-8 px-4">
@@ -112,16 +112,16 @@ export default function Landing() {
             <BentoCard className="lg:col-span-2 lg:row-span-2 min-h-[300px] md:min-h-[400px] flex flex-col justify-between" gradient>
               <div>
                 <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-[#A5B4FC] to-[#C8A2C8] flex items-center justify-center mb-4 sm:mb-6">
-                  <Lock size={24} className="sm:w-8 sm:h-8 text-white" />
+                  <Unlock size={24} className="sm:w-8 sm:h-8 text-white" />
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-bold text-[#FEFBF3] mb-3 sm:mb-4">Private by Design</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold text-[#FEFBF3] mb-3 sm:mb-4">Transparent by Design</h3>
                 <p className="text-[#EADEE7]/70 text-base sm:text-lg leading-relaxed">
-                  Your posts are only visible to accepted friends. No public profiles, no strangers—just your trusted circle.
+                  Your posts are public and readable by anyone. WRITE what you truely mean
                 </p>
               </div>
               <div className="mt-8">
                 <div className="flex items-center gap-2 text-[#A5B4FC] font-semibold">
-                  <span>End-to-end privacy</span>
+                  <span>End-to-end transparency</span>
                   <Sparkles size={16} />
                 </div>
               </div>
@@ -134,7 +134,7 @@ export default function Landing() {
               </div>
               <div>
                 <h3 className="text-2xl font-bold text-[#FEFBF3] mb-2">Real Talk</h3>
-                <p className="text-[#EADEE7]/60 text-sm">Genuine conversations without the noise</p>
+                <p className="text-[#EADEE7]/60 text-sm">WRITE to be understood, Comment to understand</p>
               </div>
             </BentoCard>
 
@@ -145,7 +145,7 @@ export default function Landing() {
               </div>
               <div>
                 <h3 className="text-2xl font-bold text-[#FEFBF3] mb-2">Your Crew</h3>
-                <p className="text-[#EADEE7]/60 text-sm">Connect with friends who get you</p>
+                <p className="text-[#EADEE7]/60 text-sm">Connect with friends to get their thoughts on your feed </p>
               </div>
             </BentoCard>
 
@@ -167,7 +167,22 @@ export default function Landing() {
               </div>
               <div>
                 <h3 className="text-2xl font-bold text-[#FEFBF3] mb-2">No Drama</h3>
-                <p className="text-[#EADEE7]/60 text-sm">Just vibes with your people</p>
+                <p className="text-[#EADEE7]/60 text-sm">Show resonance, only genuine appreciation</p>
+              </div>
+            </BentoCard>
+
+            {/* Feature Card */}
+            <BentoCard className="lg:col-span-2 min-h-[250px]" >
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br  bg-[#C8A2C8]/20 flex items-center justify-center flex-shrink-0">
+                  <User size={40} className="text-white" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-3xl font-bold text-[#FEFBF3] mb-3">Your space</h3>
+                  <p className="text-[#EADEE7]/70 text-lg">
+                  Express yourself freely in your digital sanctuary
+                  </p>
+                </div>
               </div>
             </BentoCard>
 
@@ -207,12 +222,12 @@ export default function Landing() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                 <div>
                   <h3 className="text-2xl font-bold bg-gradient-to-r from-[#A5B4FC] to-[#C8A2C8] bg-clip-text text-transparent mb-2">WRITE</h3>
-                  <p className="text-[#EADEE7]/60 text-sm">Your private space for real connections.</p>
+                  <p className="text-[#EADEE7]/60 text-sm">Your space to WRITE honestly and read openly</p>
                 </div>
                 <div>
                   <h4 className="text-[#FEFBF3] font-semibold mb-3">Features</h4>
                   <ul className="space-y-2 text-[#EADEE7]/60 text-sm">
-                    <li>Private Posts</li>
+                    <li>Transparent Posts</li>
                     <li>Friend System</li>
                     <li>Real-time Updates</li>
                   </ul>

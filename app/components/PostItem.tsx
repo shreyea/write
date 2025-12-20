@@ -6,6 +6,7 @@ import CommentSection from "./CommentSection";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { User, Heart, MessageCircle, Trash2 } from "lucide-react";
+import TimeAgo from "./TimeAgo";
 
 export default function PostItem({
   post,
@@ -32,7 +33,7 @@ export default function PostItem({
               @{post.profiles?.username}
             </div>
             <div className="text-xs text-white/50">
-              {new Date(post.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+              <TimeAgo date={post.created_at} />
             </div>
           </div>
         </Link>
