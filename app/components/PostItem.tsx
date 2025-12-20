@@ -37,21 +37,7 @@ export default function PostItem({
             </div>
           </div>
         </Link>
-        {isOwner && (
-          <button
-            onClick={async () => {
-              if (confirm('Delete this post?')) {
-                await deletePost(post.id);
-                router.refresh();
-              }
-            }}
-            className="text-xs px-3 py-1 rounded-full bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/30 transition-all flex items-center gap-1"
-            aria-label="Delete post"
-          >
-            <Trash2 size={14} />
-            Delete
-          </button>
-        )}
+       
       </div>
 
       {/* Content */}
@@ -94,6 +80,25 @@ export default function PostItem({
 
       {/* Comments */}
       <CommentSection postId={post.id} comments={post.comments} />
+
+      {/* Delete Button */}
+      {isOwner && (
+        <div className="flex justify-end pt-2 border-t border-white/5">
+          <button
+            onClick={async () => {
+              if (confirm('Delete this post?')) {
+                await deletePost(post.id);
+                router.refresh();
+              }
+            }}
+            className="text-xs px-3 py-1.5 rounded-full bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/30 transition-all flex items-center gap-1.5"
+            aria-label="Delete post"
+          >
+            <Trash2 size={14} />
+            Delete
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -80,27 +80,26 @@ export default function Landing() {
           {/* Hero Section */}
           <div className="text-center mb-12 md:mb-20">
     
-            <div className="mb-12 md:mb-20 flex justify-center">
-  <BlurText
-    text="A transparent space to share your thoughts with the real world."
-    delay={50}
-    animateBy="words"
-    direction="top"
-    className="block w-full max-w-4xl
-               text-base sm:text-lg md:text-xl lg:text-2xl
-               text-[#EADEE7]/80 font-light
-               px-30 text-center"
-  />
-</div>
-
+            <div className="mb-12 md:mb-20 flex justify-center px-4">
+              <BlurText
+                text="A transparent space to share your thoughts with the real world."
+                delay={50}
+                animateBy="words"
+                direction="top"
+                className="block w-full max-w-4xl
+                           text-base sm:text-lg md:text-xl lg:text-2xl
+                           text-[#EADEE7]/80 font-light
+                           text-center"
+              />
+            </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-8 px-4">
-              <Link href="/login" className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#A5B4FC] to-[#C8A2C8] rounded-2xl font-bold text-white text-base sm:text-lg shadow-xl hover:shadow-[#A5B4FC]/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 mb-8 px-4 w-full max-w-md mx-auto sm:max-w-none">
+              <Link href="/login" className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#A5B4FC] to-[#C8A2C8] rounded-2xl font-bold text-white text-base sm:text-lg shadow-xl hover:shadow-[#A5B4FC]/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2">
                 <Sparkles size={18} className="sm:w-5 sm:h-5" />
                 Get Started
               </Link>
-              <Link href="/login" className="px-6 sm:px-8 py-3 sm:py-4 backdrop-blur-xl bg-white/5 border-2 border-[#EADEE7]/30 rounded-2xl font-bold text-[#FEFBF3] text-base sm:text-lg hover:bg-white/10 transition-all duration-300 hover:scale-105 flex items-center justify-center">
+              <Link href="/login" className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 backdrop-blur-xl bg-white/5 border-2 border-[#EADEE7]/30 rounded-2xl font-bold text-[#FEFBF3] text-base sm:text-lg hover:bg-white/10 transition-all duration-300 hover:scale-105 flex items-center justify-center">
                 Sign In
               </Link>
             </div>

@@ -59,9 +59,12 @@ export default async function Feed() {
       <div className="relative z-10 max-w-2xl mx-auto py-10 px-4 space-y-6">
         {/* Header */}
         <div className="text-center mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black bg-linear-to-r from-[#A5B4FC] to-[#C8A2C8] bg-clip-text text-transparent mb-2 flex items-center justify-center gap-2">
-            <Sparkles size={28} className="sm:w-9 sm:h-9" /> Your Feed
-          </h1>
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Sparkles size={24} className="sm:w-7 sm:h-7 text-[#A5B4FC]" />
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black bg-gradient-to-r from-[#A5B4FC] to-[#C8A2C8] bg-clip-text text-transparent">
+              Your Feed
+            </h1>
+          </div>
           <p className="text-[#EADEE7]/60 text-sm sm:text-base">Share your vibes with your crew</p>
         </div>
 
@@ -70,13 +73,13 @@ export default async function Feed() {
 
         {/* Posts */}
         {!posts || posts.length === 0 ? (
-          <div className="text-center py-16">
-            <BentoCard className="p-6 sm:p-12 space-y-4">
+          <div className="text-center py-8 sm:py-16">
+            <BentoCard className="p-6 sm:p-12 space-y-4 mx-auto">
               <div className="mb-4 flex justify-center">
                 <FileText size={48} className="sm:w-16 sm:h-16 text-[#A5B4FC]" />
               </div>
               <h3 className="text-xl sm:text-2xl font-bold text-[#FEFBF3] mb-2">Your feed is empty</h3>
-              <p className="text-[#EADEE7]/60 mb-6 text-sm sm:text-base">
+              <p className="text-[#EADEE7]/60 mb-6 text-sm sm:text-base px-4">
                 Your feed shows posts from you and your friends.
               </p>
               <a 
