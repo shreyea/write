@@ -18,16 +18,16 @@ export default function FriendButton({
   
   if (currentStatus === "friends") {
     return (
-      <button className="px-4 py-2 rounded-full text-sm bg-green-500/20 text-green-400 border border-green-500/30 flex items-center gap-2">
-        <Check size={16} /> Friends
+      <button className="px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm bg-green-500/20 text-green-400 border border-green-500/30 flex items-center gap-1 sm:gap-2 shrink-0">
+        <Check size={14} className="sm:w-4 sm:h-4" /> <span className="hidden xs:inline">Friends</span><span className="xs:hidden">✓</span>
       </button>
     );
   }
 
   if (currentStatus === "pending") {
     return (
-      <button disabled className="px-4 py-2 rounded-full text-sm bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 flex items-center gap-2">
-        <Clock size={16} /> Request Sent
+      <button disabled className="px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 flex items-center gap-1 sm:gap-2 shrink-0">
+        <Clock size={14} className="sm:w-4 sm:h-4" /> <span className="hidden xs:inline">Pending</span><span className="xs:hidden">...</span>
       </button>
     );
   }
@@ -49,9 +49,17 @@ export default function FriendButton({
         }
       }}
       disabled={loading}
-      className="px-4 py-2 rounded-full text-sm bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 transition border border-blue-500/30 disabled:opacity-50 flex items-center gap-2"
+      className="px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 transition border border-blue-500/30 disabled:opacity-50 flex items-center gap-1 sm:gap-2 shrink-0"
     >
-      {loading ? "Sending..." : <><UserPlus size={16} /> Add Friend</>}
+      {loading ? (
+        <span className="text-xs">...</span>
+      ) : (
+        <>
+          <UserPlus size={14} className="sm:w-4 sm:h-4" /> 
+          <span className="hidden xs:inline">Add Friend</span>
+          <span className="xs:hidden">Add</span>
+        </>
+      )}
     </button>
   );
 }

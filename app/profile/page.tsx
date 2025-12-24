@@ -61,7 +61,7 @@ export default async function ProfilePage() {
 
   return (
     <div className="min-h-screen relative">
-      <ParticleBackground color="#9783e7" count={300} shape="sphere" />
+      <ParticleBackground color="#ece198" count={300} shape="sphere" />
       <div className="relative z-10 max-w-7xl mx-auto py-10 px-4">
         {/* Header */}
         <div className="text-center mb-8">
@@ -138,7 +138,7 @@ export default async function ProfilePage() {
                   ))
                 ) : (
                   <p className="text-white/60 text-sm text-center py-4">
-                    No friends yet. <Link href="/search" className="text-[#A5B4FC] hover:underline">Find friends</Link>
+                    No friends yet. <Link href="/search" className="text-purple-400 hover:underline">Find friends</Link>
                   </p>
                 )}
               </div>

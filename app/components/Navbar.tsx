@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { supabase } from "@/lib/supabase/client";
 import { usePathname } from "next/navigation";
-import { Home, Search, Mail, Settings, LogOut, Sparkles, User } from "lucide-react";
+import { Home, Search, Mail, Settings, LogOut, Sparkles, User, Feather} from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -22,7 +22,7 @@ export default function Navbar() {
           <span className="text-xl sm:text-2xl font-black bg-linear-to-r from-[#A5B4FC] to-[#C8A2C8] bg-clip-text text-transparent">
             WRITE
           </span>
-          <Sparkles size={16} className="sm:w-5 sm:h-5 text-[#A5B4FC] group-hover:rotate-12 transition-transform" aria-hidden="true" />
+          <Feather size={16} className="sm:w-5 sm:h-5 text-[#A5B4FC] group-hover:rotate-12 transition-transform" aria-hidden="true" />
         </Link>
 
         <div className="flex items-center gap-1 sm:gap-2">

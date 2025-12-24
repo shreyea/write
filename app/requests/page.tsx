@@ -53,7 +53,7 @@ export default async function RequestsPage() {
 
   return (
     <div className="min-h-screen relative">
-      <ParticleBackground color="#9783e7" count={300} shape="sphere" />
+      <ParticleBackground color="#ece198" count={300} shape="sphere" />
       <div className="relative z-10 max-w-2xl mx-auto py-10 px-4">
         <div className="text-center mb-6 sm:mb-8">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-black bg-gradient-to-r from-[#A5B4FC] to-[#C8A2C8] bg-clip-text text-transparent mb-2 flex items-center justify-center gap-2">

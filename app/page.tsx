@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Lock, MessageCircle, Users, Sparkles, Zap, Heart, Unlock, User } from "lucide-react";
+import { MessageCircle, Users, Pen, Zap, Heart, Unlock, User, Github, Linkedin, Instagram ,Edit3} from "lucide-react";
 import BlurText from "./components/BlurText";
 import BentoCard from "./components/BentoCard";
 import Antigravity from "./components/Antigravity";
@@ -67,46 +67,47 @@ export default function Landing() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 min-h-screen px-4 py-8 md:px-8">
+      <div className="relative z-10 min-h-screen px-4 py-8 md:px-8 lg:px-12">
         <div className="max-w-7xl mx-auto">
           {/* Logo at Top Center */}
-         <div className="text-center mb-12 md:mb-16 mt-10">
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black bg-gradient-to-r from-[#A5B4FC] via-[#C8A2C8] to-[#EADEE7] bg-clip-text text-transparent mb-2 animate-gradient">
+          <div className="text-center mb-8 md:mb-12 lg:mb-16 mt-6 md:mt-10">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black bg-gradient-to-r from-[#A5B4FC] via-[#C8A2C8] to-[#EADEE7] bg-clip-text text-transparent mb-3 md:mb-4 animate-gradient">
               WRITE
             </h1>
             <div className="h-1 w-20 mx-auto bg-gradient-to-r from-[#A5B4FC] to-[#C8A2C8] rounded-full"></div>
           </div>
   
           {/* Hero Section */}
-          <div className="text-center mb-12 md:mb-20">
+          <div className="text-center mb-12 md:mb-16 lg:mb-20">
     
-            <div className="mb-12 md:mb-20 flex justify-center px-4">
+            <div className="mb-10 md:mb-16 lg:mb-20 flex justify-center items-center px-4">
               <BlurText
                 text="A transparent space to share your thoughts with the real world."
                 delay={50}
                 animateBy="words"
                 direction="top"
-                className="block w-full max-w-4xl
+                className="block w-full max-w-3xl lg:max-w-4xl
                            text-base sm:text-lg md:text-xl lg:text-2xl
                            text-[#EADEE7]/80 font-light
-                           text-center"
+                           text-center
+                           leading-relaxed"
               />
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 mb-8 px-4 w-full max-w-md mx-auto sm:max-w-none">
-              <Link href="/login" className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#A5B4FC] to-[#C8A2C8] rounded-2xl font-bold text-white text-base sm:text-lg shadow-xl hover:shadow-[#A5B4FC]/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2">
-                <Sparkles size={18} className="sm:w-5 sm:h-5" />
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 lg:gap-6 mb-8 px-4 w-full max-w-md mx-auto sm:max-w-none">
+              <Link href="/login" className="w-full sm:w-auto px-6 sm:px-8 lg:px-10 py-3 sm:py-4 bg-gradient-to-r from-[#A5B4FC] to-[#C8A2C8] rounded-2xl font-bold text-white text-base sm:text-lg shadow-xl hover:shadow-[#A5B4FC]/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2">
+                <Pen size={18} className="sm:w-5 sm:h-5" />
                 Get Started
               </Link>
-              <Link href="/login" className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 backdrop-blur-xl bg-white/5 border-2 border-[#EADEE7]/30 rounded-2xl font-bold text-[#FEFBF3] text-base sm:text-lg hover:bg-white/10 transition-all duration-300 hover:scale-105 flex items-center justify-center">
+              <Link href="/login" className="w-full sm:w-auto px-6 sm:px-8 lg:px-10 py-3 sm:py-4 backdrop-blur-xl bg-white/5 border-2 border-[#EADEE7]/30 rounded-2xl font-bold text-[#FEFBF3] text-base sm:text-lg hover:bg-white/10 transition-all duration-300 hover:scale-105 flex items-center justify-center">
                 Sign In
               </Link>
             </div>
           </div>
 
           {/* Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-12 md:mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 mb-12 md:mb-16 lg:mb-20">
             {/* Large Feature Card - Spans 2 columns */}
             <BentoCard className="lg:col-span-2 lg:row-span-2 min-h-[300px] md:min-h-[400px] flex flex-col justify-between" gradient>
               <div>
@@ -121,7 +122,7 @@ export default function Landing() {
               <div className="mt-8">
                 <div className="flex items-center gap-2 text-[#A5B4FC] font-semibold">
                   <span>End-to-end transparency</span>
-                  <Sparkles size={16} />
+                  <Pen size={16} />
                 </div>
               </div>
             </BentoCard>
@@ -189,7 +190,7 @@ export default function Landing() {
             <BentoCard className="lg:col-span-2 min-h-[250px]" gradient>
               <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                 <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#C8A2C8] to-[#EADEE7] flex items-center justify-center flex-shrink-0">
-                  <Sparkles size={40} className="text-white" />
+                  <Pen size={40} className="text-white" />
                 </div>
                 <div className="flex-1">
                   <h3 className="text-3xl font-bold text-[#FEFBF3] mb-3">Daily Updates</h3>
@@ -209,7 +210,7 @@ export default function Landing() {
                 Join your friends and start sharing your story.
               </p>
               <Link href="/login" className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-[#A5B4FC] to-[#C8A2C8] rounded-2xl font-bold text-white text-xl shadow-xl hover:shadow-[#A5B4FC]/50 transition-all duration-300 hover:scale-105">
-                <Sparkles size={24} />
+                <Edit3 size={24} />
                 Start Now
               </Link>
             </BentoCard>
@@ -218,7 +219,7 @@ export default function Landing() {
           {/* Footer */}
           <footer className="py-12 border-t border-white/10">
             <div className="max-w-7xl mx-auto px-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-8 mx-10">
                 <div>
                   <h3 className="text-2xl font-bold bg-gradient-to-r from-[#A5B4FC] to-[#C8A2C8] bg-clip-text text-transparent mb-2">WRITE</h3>
                   <p className="text-[#EADEE7]/60 text-sm">Your space to WRITE honestly and read openly</p>
@@ -237,6 +238,44 @@ export default function Landing() {
                 </div>
               </div>
               <div className="text-center pt-8 border-t border-white/5">
+                {/* Made by Section */}
+                <div className="mb-6">
+                  <p className="text-[#EADEE7]/70 text-base mb-4 font-medium">
+                    Made by <span className="text-[#A5B4FC] font-semibold">Shreya</span>
+                  </p>
+                  <div className="flex items-center justify-center gap-6">
+                    <a 
+                      href="https://github.com/shreyea" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-[#EADEE7]/60 hover:text-[#A5B4FC] transition-colors duration-300 flex items-center gap-2 group"
+                      aria-label="GitHub Profile"
+                    >
+                      <Github size={20} className="group-hover:scale-110 transition-transform" />
+                      <span className="text-sm">GitHub</span>
+                    </a>
+                    <a 
+                      href="https://linkedin.com/in/shreyea" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-[#EADEE7]/60 hover:text-[#C8A2C8] transition-colors duration-300 flex items-center gap-2 group"
+                      aria-label="LinkedIn Profile"
+                    >
+                      <Linkedin size={20} className="group-hover:scale-110 transition-transform" />
+                      <span className="text-sm">LinkedIn</span>
+                    </a>
+                    <a 
+                      href="https://instagram.com/shreyea" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-[#EADEE7]/60 hover:text-[#EADEE7] transition-colors duration-300 flex items-center gap-2 group"
+                      aria-label="Instagram Profile"
+                    >
+                      <Instagram size={20} className="group-hover:scale-110 transition-transform" />
+                      <span className="text-sm">Instagram</span>
+                    </a>
+                  </div>
+                </div>
                 <p className="text-[#EADEE7]/40 text-sm">© 2025 WRITE. Built for genuine connections.</p>
               </div>
             </div>

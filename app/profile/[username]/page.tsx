@@ -71,19 +71,21 @@ export default async function Profile({ params }: any) {
       <ParticleBackground color="#9783e7" count={400} shape="sphere" />
       <div className="relative z-10 max-w-2xl mx-auto py-10 px-4 space-y-6">
         {/* Profile Header */}
-        <div className="backdrop-blur-xl bg-white/5 border border-[#A5B4FC]/20 rounded-3xl p-8 hover:border-[#A5B4FC]/30 transition-all">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-20 h-20 rounded-full bg-linear-to-br from-[#A5B4FC] to-[#C8A2C8] flex items-center justify-center">
-                <User size={48} className="text-white" />
+        <div className="backdrop-blur-xl bg-white/5 border border-[#A5B4FC]/20 rounded-3xl p-4 sm:p-8 hover:border-[#A5B4FC]/30 transition-all">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-linear-to-br from-[#A5B4FC] to-[#C8A2C8] flex items-center justify-center shrink-0">
+                <User size={32} className="sm:w-12 sm:h-12 text-white" />
               </div>
-              <div>
-                <h1 className="text-3xl font-black text-white">@{profile.username}</h1>
-                <div className="text-white/60 text-sm">{posts?.length || 0} posts</div>
+              <div className="min-w-0 flex-1">
+                <h1 className="text-xl sm:text-3xl font-black text-white truncate">@{profile.username}</h1>
+                <div className="text-white/60 text-xs sm:text-sm">{posts?.length || 0} posts</div>
               </div>
             </div>
             {!isOwnProfile && user && (
-              <FriendButton targetUserId={profile.id} status={status} />
+              <div className="w-full sm:w-auto flex justify-end">
+                <FriendButton targetUserId={profile.id} status={status} />
+              </div>
             )}
           </div>
         </div>

@@ -1,48 +1,78 @@
+/**
+ * TimeAgo Component - Production-Ready Timestamp Display
+ * 
+ * Automatically converts UTC timestamps to user's local timezone
+ * with support for both relative and absolute time formats.
+ * 
+ * USAGE EXAMPLES:
+ * 
+ * // Feed View - Relative time ("5 minutes ago", "just now")
+ * <TimeAgo date={post.created_at} />
+ * 
+ * // Detail View - Exact time ("24 Dec 2025 · 3:00 PM")
+ * <TimeAgo date={post.created_at} variant="absolute" />
+ * 
+ * FEATURES:
+ * ✓ Automatic UTC → Local timezone conversion
+ * ✓ Live updates every 10 seconds (relative mode)
+ * ✓ Full timestamp on hover
+ * ✓ SSR-safe (no hydration mismatches)
+ * ✓ Production-ready
+ */
+
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatRelativeTime, formatAbsoluteTime, formatFullTimestamp } from "@/lib/dateUtils";
 
-export default function TimeAgo({ date }: { date: string }) {
-  const getTimeAgo = (date: string) => {
-    const now = new Date().getTime();
-    const postDate = new Date(date).getTime();
-    const diffInSeconds = Math.floor((now - postDate) / 1000);
+interface TimeAgoProps {
+  date: string;
+  variant?: "relative" | "absolute";
+}
 
-    if (diffInSeconds < 10) {
-      return "just now";
-    } else if (diffInSeconds < 60) {
-      return `${diffInSeconds}s ago`;
-    } else if (diffInSeconds < 3600) {
-      const minutes = Math.floor(diffInSeconds / 60);
-      return `${minutes}m ago`;
-    } else if (diffInSeconds < 86400) {
-      const hours = Math.floor(diffInSeconds / 3600);
-      return `${hours}h ago`;
-    } else if (diffInSeconds < 604800) {
-      const days = Math.floor(diffInSeconds / 86400);
-      return `${days}d ago`;
-    } else if (diffInSeconds < 2592000) {
-      const weeks = Math.floor(diffInSeconds / 604800);
-      return `${weeks}w ago`;
-    } else {
-      return new Date(date).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      });
-    }
-  };
+export default function TimeAgo({ date, variant = "relative" }: TimeAgoProps) {
+  const [mounted, setMounted] = useState(false);
+  const [displayTime, setDisplayTime] = useState("");
 
-  const [timeAgo, setTimeAgo] = useState(getTimeAgo(date));
+  // Handle SSR - only run on client
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
-    setTimeAgo(getTimeAgo(date));
-    const interval = setInterval(() => {
-      setTimeAgo(getTimeAgo(date));
-    }, 10000); // Update every 10 seconds
+    if (!mounted) return;
 
-    return () => clearInterval(interval);
-  }, [date]);
+    const updateTime = () => {
+      if (variant === "absolute") {
+        // Show exact local date & time
+        setDisplayTime(formatAbsoluteTime(date));
+      } else {
+        // Show relative time (e.g., "5 minutes ago")
+        setDisplayTime(formatRelativeTime(date));
+      }
+    };
 
-  return <span>{timeAgo}</span>;
+    updateTime();
+
+    // Auto-update relative time every 10 seconds
+    if (variant === "relative") {
+      const interval = setInterval(updateTime, 10000);
+      return () => clearInterval(interval);
+    }
+  }, [date, variant, mounted]);
+
+  // Prevent hydration mismatch - render nothing on server
+  if (!mounted) {
+    return <span className="invisible">Loading...</span>;
+  }
+
+  return (
+    <span 
+      title={formatFullTimestamp(date)}
+      className="cursor-help"
+    >
+      {displayTime}
+    </span>
+  );
 }
+  
