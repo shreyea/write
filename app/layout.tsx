@@ -2,6 +2,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { Metadata, Viewport } from "next";
+import NavbarWrapper from "./components/NavbarWrapper";
 
 export const metadata: Metadata = {
   title: "WRITE - Your Vibe. Your Tribe.",
@@ -11,6 +12,12 @@ export const metadata: Metadata = {
   creator: "WRITE",
   publisher: "WRITE",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://write-app.com'),
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'WRITE',
+  },
   openGraph: {
     type: "website",
     title: "WRITE - Your Vibe. Your Tribe.",
@@ -35,17 +42,34 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  
   return (
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="theme-color" content="#A5B4FC" />
       </head>
      <body className="min-h-screen bg-[#050505] text-[#FEFBF3]">
-        {user && <Navbar />}
+        <NavbarWrapper />
         {children}
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            if ('serviceWorker' in navigator) {
+              window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(
+                  function(registration) {
+                    console.log('ServiceWorker registration successful');
+                  },
+                  function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                  }
+                );
+              });
+            }
+          `
+        }} />
       </body>
     </html>
   );

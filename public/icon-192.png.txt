@@ -1,0 +1,7 @@
+This is a placeholder. You need to create actual PNG icons:
+- icon-192.png (192x192 pixels)
+- icon-512.png (512x512 pixels)
+
+You can use an online tool like:
+- https://www.favicon-generator.org/
+- Or create them in Figma/Photoshop with your WRITE logo

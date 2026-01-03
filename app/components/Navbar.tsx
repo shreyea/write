@@ -2,99 +2,118 @@
 
 import Link from "next/link";
 import { supabase } from "@/lib/supabase/client";
-import { usePathname } from "next/navigation";
-import { Home, Search, Mail, Settings, LogOut, Sparkles, User, Feather} from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Home, Search, Mail, Settings, LogOut, User, Feather } from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
 
   async function logout() {
     await supabase.auth.signOut();
-    window.location.href = "/";
+    router.push("/");
+    router.refresh();
   }
 
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur-xl bg-white/5 border-b border-[#A5B4FC]/20" role="navigation" aria-label="Main navigation">
-      <div className="max-w-6xl mx-auto px-2 sm:px-4 py-3 sm:py-4 flex justify-between items-center">
-        <Link href="/feed" className="flex items-center gap-1.5 sm:gap-2 group" aria-label="WRITE home">
-          <span className="text-xl sm:text-2xl font-black bg-linear-to-r from-[#A5B4FC] to-[#C8A2C8] bg-clip-text text-transparent">
-            WRITE
-          </span>
-          <Feather size={16} className="sm:w-5 sm:h-5 text-[#A5B4FC] group-hover:rotate-12 transition-transform" aria-hidden="true" />
-        </Link>
+    <nav 
+      className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50"
+      role="navigation" 
+      aria-label="Main navigation"
+    >
+        <div className="backdrop-blur-xl   border border-white/20 rounded-full px-6 py-3 shadow-2xl shadow-black/20">
+          <div className="flex items-center gap-1">
+            {/* Feed */}
+            <Link 
+              href="/feed" 
+              className={`group relative p-3 rounded-full transition-all duration-300 ${
+                isActive('/feed') 
+                  ? 'bg-gradient-to-br from-[#A5B4FC] to-[#C8A2C8] text-white shadow-lg shadow-[#A5B4FC]/50 scale-110' 
+                  : 'text-[#EADEE7]/70 hover:text-white hover:bg-white/10 hover:scale-110'
+              }`}
+              aria-label="Feed"
+              aria-current={isActive('/feed') ? 'page' : undefined}
+              title="Feed"
+            >
+              <Home size={22} className="transition-transform" aria-hidden="true" />
+            </Link>
 
-        <div className="flex items-center gap-1 sm:gap-2">
-          <Link 
-            href="/feed" 
-            className={`px-2 sm:px-4 py-2 rounded-xl transition-all flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base ${
-              isActive('/feed') 
-                ? 'bg-[#A5B4FC]/20 text-[#A5B4FC] border border-[#A5B4FC]/30' 
-                : 'text-[#EADEE7]/70 hover:text-[#FEFBF3] hover:bg-white/5'
-            }`}
-            aria-label="Feed"
-            aria-current={isActive('/feed') ? 'page' : undefined}
-          >
-            <Home size={16} className="sm:w-[18px] sm:h-[18px]" aria-hidden="true" /> <span className="hidden sm:inline">Feed</span>
-          </Link>
-          <Link 
-            href="/search" 
-            className={`px-2 sm:px-4 py-2 rounded-xl transition-all flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base ${
-              isActive('/search') 
-                ? 'bg-[#A5B4FC]/20 text-[#A5B4FC] border border-[#A5B4FC]/30' 
-                : 'text-[#EADEE7]/70 hover:text-[#FEFBF3] hover:bg-white/5'
-            }`}
-            aria-label="Search"
-            aria-current={isActive('/search') ? 'page' : undefined}
-          >
-            <Search size={16} className="sm:w-[18px] sm:h-[18px]" aria-hidden="true" /> <span className="hidden sm:inline">Search</span>
-          </Link>
-          <Link 
-            href="/requests" 
-            className={`px-2 sm:px-4 py-2 rounded-xl transition-all flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base ${
-              isActive('/requests') 
-                ? 'bg-[#A5B4FC]/20 text-[#A5B4FC] border border-[#A5B4FC]/30' 
-                : 'text-[#EADEE7]/70 hover:text-[#FEFBF3] hover:bg-white/5'
-            }`}
-            aria-label="Friend requests"
-            aria-current={isActive('/requests') ? 'page' : undefined}
-          >
-            <Mail size={16} className="sm:w-[18px] sm:h-[18px]" aria-hidden="true" /> <span className="hidden sm:inline">Requests</span>
-          </Link>
-          <Link 
-            href="/profile" 
-            className={`px-2 sm:px-4 py-2 rounded-xl transition-all flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base ${
-              isActive('/profile') 
-                ? 'bg-[#A5B4FC]/20 text-[#A5B4FC] border border-[#A5B4FC]/30' 
-                : 'text-[#EADEE7]/70 hover:text-[#FEFBF3] hover:bg-white/5'
-            }`}
-            aria-label="Profile"
-            aria-current={isActive('/profile') ? 'page' : undefined}
-          >
-            <User size={16} className="sm:w-[18px] sm:h-[18px]" aria-hidden="true" /> <span className="hidden sm:inline">Profile</span>
-          </Link>
-          <Link 
-            href="/settings" 
-            className={`px-2 sm:px-4 py-2 rounded-xl transition-all flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base ${
-              isActive('/settings') 
-                ? 'bg-[#A5B4FC]/20 text-[#A5B4FC] border border-[#A5B4FC]/30' 
-                : 'text-[#EADEE7]/70 hover:text-[#FEFBF3] hover:bg-white/5'
-            }`}
-            aria-label="Settings"
-            aria-current={isActive('/settings') ? 'page' : undefined}
-          >
-            <Settings size={16} className="sm:w-[18px] sm:h-[18px]" aria-hidden="true" /> <span className="hidden sm:inline">Settings</span>
-          </Link>
-          <button 
-            onClick={logout} 
-            className="px-2 sm:px-4 py-2 rounded-xl text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base"
-            aria-label="Logout"
-          >
-            <LogOut size={16} className="sm:w-[18px] sm:h-[18px]" aria-hidden="true" /> <span className="hidden sm:inline">Logout</span>
-          </button>
+            {/* Search */}
+            <Link 
+              href="/search" 
+              className={`group relative p-3 rounded-full transition-all duration-300 ${
+                isActive('/search') 
+                  ? 'bg-gradient-to-br from-[#A5B4FC] to-[#C8A2C8] text-white shadow-lg shadow-[#A5B4FC]/50 scale-110' 
+                  : 'text-[#EADEE7]/70 hover:text-white hover:bg-white/10 hover:scale-110'
+              }`}
+              aria-label="Search"
+              aria-current={isActive('/search') ? 'page' : undefined}
+              title="Search"
+            >
+              <Search size={22} className="transition-transform" aria-hidden="true" />
+            </Link>
+
+            {/* Requests */}
+            <Link 
+              href="/requests" 
+              className={`group relative p-3 rounded-full transition-all duration-300 ${
+                isActive('/requests') 
+                  ? 'bg-gradient-to-br from-[#A5B4FC] to-[#C8A2C8] text-white shadow-lg shadow-[#A5B4FC]/50 scale-110' 
+                  : 'text-[#EADEE7]/70 hover:text-white hover:bg-white/10 hover:scale-110'
+              }`}
+              aria-label="Friend requests"
+              aria-current={isActive('/requests') ? 'page' : undefined}
+              title="Requests"
+            >
+              <Mail size={22} className="transition-transform" aria-hidden="true" />
+            </Link>
+
+            {/* Divider */}
+            <div className="w-px h-8 bg-white/30 mx-2" />
+
+            {/* Profile */}
+            <Link 
+              href="/profile" 
+              className={`group relative p-3 rounded-full transition-all duration-300 ${
+                isActive('/profile') 
+                  ? 'bg-gradient-to-br from-[#A5B4FC] to-[#C8A2C8] text-white shadow-lg shadow-[#A5B4FC]/50 scale-110' 
+                  : 'text-[#EADEE7]/70 hover:text-white hover:bg-white/10 hover:scale-110'
+              }`}
+              aria-label="Profile"
+              aria-current={isActive('/profile') ? 'page' : undefined}
+              title="Profile"
+            >
+              <User size={22} className="transition-transform" aria-hidden="true" />
+            </Link>
+
+            {/* Settings */}
+            <Link 
+              href="/settings" 
+              className={`group relative p-3 rounded-full transition-all duration-300 ${
+                isActive('/settings') 
+                  ? 'bg-gradient-to-br from-[#A5B4FC] to-[#C8A2C8] text-white shadow-lg shadow-[#A5B4FC]/50 scale-110' 
+                  : 'text-[#EADEE7]/70 hover:text-white hover:bg-white/10 hover:scale-110'
+              }`}
+              aria-label="Settings"
+              aria-current={isActive('/settings') ? 'page' : undefined}
+              title="Settings"
+            >
+              <Settings size={22} className="transition-transform" aria-hidden="true" />
+            </Link>
+
+            {/* Logout */}
+            <button 
+              onClick={logout} 
+              className="group relative p-3 rounded-full text-red-400 hover:bg-red-500/20 hover:text-red-300 transition-all duration-300 hover:scale-110"
+              aria-label="Logout"
+              title="Logout"
+            >
+              <LogOut size={22} className="transition-transform" aria-hidden="true" />
+            </button>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
   );
 }
