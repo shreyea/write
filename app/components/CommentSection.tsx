@@ -19,7 +19,7 @@ export default function CommentSection({
     <div className="space-y-3 pt-3 border-t border-white/10">
       {comments.map((c) => (
         <div key={c.id} className="flex gap-2 items-start">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#A5B4FC] to-[#C8A2C8] flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-full bg-linear-to-br from-[#A5B4FC] to-[#C8A2C8] flex items-center justify-center shrink-0">
             <User size={16} className="text-white" />
           </div>
           <div className="flex-1 bg-white/5 rounded-xl p-3 border border-white/10">

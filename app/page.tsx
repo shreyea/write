@@ -5,11 +5,21 @@ import { MessageCircle, Users, Pen, Zap, Heart, Unlock, User, Github, Linkedin, 
 import BlurText from "./components/BlurText";
 import BentoCard from "./components/BentoCard";
 import Antigravity from "./components/Antigravity";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Lenis from "lenis";
 
 export default function Landing() {
+  const [particleCount, setParticleCount] = useState(400);
+
   useEffect(() => {
+    // Set particle count based on screen size
+    const updateParticleCount = () => {
+      setParticleCount(window.innerWidth < 768 ? 100 : 400);
+    };
+    
+    updateParticleCount();
+    window.addEventListener('resize', updateParticleCount);
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -21,7 +31,10 @@ export default function Landing() {
     }
 
     requestAnimationFrame(raf);
-    return () => lenis.destroy();
+    return () => {
+      lenis.destroy();
+      window.removeEventListener('resize', updateParticleCount);
+    };
   }, []);
 
   return (
@@ -29,7 +42,7 @@ export default function Landing() {
       {/* Premium Particle background */}
       <div className="fixed inset-0 z-0">
         <Antigravity
-          count={400}
+          count={particleCount}
           magnetRadius={6}
           ringRadius={6}
           waveSpeed={1.8}

@@ -47,12 +47,18 @@ export default function PostItem({
 
       {/* Image */}
       {post.image_url && (
-        <img
-          src={post.image_url}
-          alt={`Post image by @${post.profiles?.username}`}
-          className="rounded-2xl max-h-96 object-cover w-full border border-white/10"
-          loading="lazy"
-        />
+        <div className="relative rounded-2xl overflow-hidden border border-white/10">
+          <img
+            src={post.image_url}
+            alt={`Post image by @${post.profiles?.username}`}
+            className="w-full max-h-96 object-cover"
+            loading="lazy"
+            onError={(e) => {
+              console.error("Image failed to load:", post.image_url);
+              e.currentTarget.style.display = 'none';
+            }}
+          />
+        </div>
       )}
 
       {/* Actions */}
