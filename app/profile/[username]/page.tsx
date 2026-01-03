@@ -68,9 +68,9 @@ export default async function Profile({ params }: any) {
       image_url, 
       created_at, 
       user_id,
-      profiles!inner(username),
+      profiles(username),
       likes(user_id),
-      comments(id, content, created_at, profiles(username))
+      comments(id, content, created_at, user_id, profiles(username))
     `)
     .eq("user_id", profile.id)
     .order("created_at", { ascending: false });

@@ -45,9 +45,9 @@ export default async function Feed() {
       image_url, 
       created_at, 
       user_id,
-      profiles!inner(username),
+      profiles(username),
       likes(user_id),
-      comments(id, content, created_at, profiles(username))
+      comments(id, content, created_at, user_id, profiles(username))
     `)
     .in("user_id", Array.from(friendIds))
     .order("created_at", { ascending: false });
@@ -56,11 +56,14 @@ export default async function Feed() {
     console.error("Error fetching posts:", error);
   }
 
-  // Debug info
-  if (process.env.NODE_ENV === 'development') {
-    console.log('Feed - User ID:', user!.id);
-    console.log('Feed - Friend IDs:', Array.from(friendIds));
-    console.log('Feed - Posts count:', posts?.length || 0);
+  // Debug info - always show to help troubleshoot
+  console.log('=== FEED DEBUG ===');
+  console.log('User ID:', user!.id);
+  console.log('Friend IDs:', Array.from(friendIds));
+  console.log('Posts fetched:', posts?.length || 0);
+  console.log('Error:', error);
+  if (posts && posts.length > 0) {
+    console.log('First post:', posts[0]);
   }
 
   return (

@@ -103,8 +103,13 @@ export async function createPost(
 
   if (error) {
     console.error("Error creating post:", error);
-    throw new Error("Failed to create post");
+    throw new Error(`Failed to create post: ${error.message}`);
   }
+
+  console.log("=== POST CREATED ===");
+  console.log("Post ID:", data.id);
+  console.log("User ID:", user.id);
+  console.log("Content:", trimmedContent.substring(0, 50));
   
   revalidatePath("/feed");
   revalidatePath("/profile");
