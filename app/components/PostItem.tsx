@@ -20,8 +20,9 @@ export default function PostItem({
   const [isPending, startTransition] = useTransition();
   const [isDeleting, setIsDeleting] = useState(false);
   const isOwner = post.user_id === userId;
-  const hasLiked = post.likes?.some((like: any) => like.user_id === userId);
-  const likeCount = post.likes?.length || 0;
+  const hasLiked = post.likes?.some((like: any) => like.user_id === userId) || false;
+  const likeCount = Array.isArray(post.likes) ? post.likes.length : 0;
+  const commentCount = Array.isArray(post.comments) ? post.comments.length : 0;
 
   return (
     <div className="backdrop-blur-xl bg-white/5 border border-[#A5B4FC]/20 rounded-3xl p-6 space-y-4 shadow-xl hover:shadow-2xl transition-all duration-300 hover:border-[#A5B4FC]/30">
@@ -53,17 +54,15 @@ export default function PostItem({
         <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5">
           <img
             src={post.image_url}
-            alt={`Post image by @${post.profiles?.username}`}
+            alt={`Post by @${post.profiles?.username || 'user'}`}
             className="w-full max-h-96 object-cover"
             loading="lazy"
             crossOrigin="anonymous"
+            referrerPolicy="no-referrer"
             onError={(e) => {
-              console.error("Image failed to load:", post.image_url);
               const target = e.currentTarget as HTMLImageElement;
-              target.style.display = 'none';
-              const parent = target.parentElement;
-              if (parent) {
-                parent.innerHTML = '<div class="p-4 text-center text-white/40 text-sm">Image failed to load</div>';
+              if (target.parentElement) {
+                target.parentElement.innerHTML = '<div class="p-4 text-center text-white/40 text-sm">📷 Image unavailable</div>';
               }
             }}
           />
@@ -92,12 +91,12 @@ export default function PostItem({
         </button>
         <div className="text-[#EADEE7]/40 text-sm flex items-center gap-2">
           <MessageCircle size={18} />
-          {post.comments?.length || 0} comments
+          {commentCount} {commentCount === 1 ? 'comment' : 'comments'}
         </div>
       </div>
 
       {/* Comments */}
-      <CommentSection postId={post.id} comments={post.comments} />
+      <CommentSection postId={post.id} comments={post.comments || []} />
 
       {/* Delete Button */}
       {isOwner && (

@@ -159,10 +159,13 @@ export async function deletePost(postId: string) {
 
   if (error) {
     console.error("Error deleting post:", error);
-    throw new Error("Failed to delete post");
+    throw new Error(`Failed to delete post: ${error.message}`);
   }
 
+  // Revalidate multiple paths to ensure UI updates everywhere
   revalidatePath("/feed");
   revalidatePath("/profile");
-  revalidatePath(`/profile/${user.id}`);
+  revalidatePath(`/profile/[username]`);
+  
+  return { success: true };
 }

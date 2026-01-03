@@ -8,6 +8,7 @@ import BentoCard from "../components/BentoCard";
 // Force dynamic rendering to prevent caching issues
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 export default async function Feed() {
   const supabase = await createSupabaseServerClient();
@@ -39,10 +40,14 @@ export default async function Feed() {
   const { data: posts, error } = await supabase
     .from("posts")
     .select(`
-      id, content, image_url, created_at, user_id,
-      profiles(username),
+      id, 
+      content, 
+      image_url, 
+      created_at, 
+      user_id,
+      profiles!inner(username),
       likes(user_id),
-      comments(id, content, profiles(username))
+      comments(id, content, created_at, profiles(username))
     `)
     .in("user_id", Array.from(friendIds))
     .order("created_at", { ascending: false });
@@ -91,8 +96,8 @@ export default async function Feed() {
             </BentoCard>
           </div>
         ) : (
-          posts.map(p => (
-            <PostItem key={p.id} post={p} userId={user!.id} />
+          posts && posts.length > 0 && posts.map(p => (
+            <PostItem key={`post-${p.id}`} post={p} userId={user!.id} />
           ))
         )}
       </div>
