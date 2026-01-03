@@ -65,26 +65,33 @@ export async function createPost(
   let imageUrl = null;
 
   if (file) {
-    const fileExtension = file.name.split('.').pop();
-    const sanitizedFileName = `${Date.now()}.${fileExtension}`;
-    const path = `${user.id}/${sanitizedFileName}`;
+    try {
+      const fileExtension = file.name.split('.').pop();
+      const sanitizedFileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExtension}`;
+      const path = `${user.id}/${sanitizedFileName}`;
 
-    const { error: uploadError } = await supabase.storage
-      .from("posts")
-      .upload(path, file, {
-        cacheControl: '3600',
-        upsert: false
-      });
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from("posts")
+        .upload(path, file, {
+          cacheControl: '3600',
+          upsert: false,
+          contentType: file.type
+        });
 
-    if (uploadError) {
-      console.error("Error uploading image:", uploadError);
-      throw new Error("Failed to upload image");
-    } else {
-      imageUrl = supabase
+      if (uploadError) {
+        console.error("Image upload error:", uploadError);
+        throw new Error(`Failed to upload image: ${uploadError.message}`);
+      }
+
+      const { data: urlData } = supabase
         .storage
         .from("posts")
-        .getPublicUrl(path)
-        .data.publicUrl;
+        .getPublicUrl(path);
+      
+      imageUrl = urlData.publicUrl;
+    } catch (error: any) {
+      console.error("Image upload failed:", error);
+      throw new Error(`Image upload failed: ${error.message}`);
     }
   }
 
@@ -98,10 +105,10 @@ export async function createPost(
     console.error("Error creating post:", error);
     throw new Error("Failed to create post");
   }
-
-  console.log("Post created successfully:", data);
+  
   revalidatePath("/feed");
   revalidatePath("/profile");
+  revalidatePath(`/profile/${user.id}`);
   
   return data;
 }
@@ -117,6 +124,33 @@ export async function deletePost(postId: string) {
 
   if (!user) throw new Error("Not authenticated");
 
+  // First verify the post belongs to the user
+  const { data: post } = await supabase
+    .from("posts")
+    .select("id, user_id, image_url")
+    .eq("id", postId)
+    .eq("user_id", user.id)
+    .single();
+
+  if (!post) {
+    throw new Error("Post not found or you don't have permission to delete it");
+  }
+
+  // Delete the image from storage if it exists
+  if (post.image_url) {
+    try {
+      const urlParts = post.image_url.split('/posts/');
+      if (urlParts.length > 1) {
+        const path = urlParts[1];
+        await supabase.storage.from('posts').remove([path]);
+      }
+    } catch (error) {
+      console.error("Error deleting image:", error);
+      // Continue with post deletion even if image deletion fails
+    }
+  }
+
+  // Delete the post (cascading deletes should handle comments and likes)
   const { error } = await supabase
     .from("posts")
     .delete()
@@ -130,4 +164,5 @@ export async function deletePost(postId: string) {
 
   revalidatePath("/feed");
   revalidatePath("/profile");
+  revalidatePath(`/profile/${user.id}`);
 }

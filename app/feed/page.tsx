@@ -5,6 +5,10 @@ import { Sparkles, Search, FileText } from "lucide-react";
 import ParticleBackground from "../components/ParticleBackground";
 import BentoCard from "../components/BentoCard";
 
+// Force dynamic rendering to prevent caching issues
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function Feed() {
   const supabase = await createSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -43,20 +47,15 @@ export default async function Feed() {
     .in("user_id", Array.from(friendIds))
     .order("created_at", { ascending: false });
 
-  console.log("Feed Debug:", { 
-    userId: user!.id, 
-    friendIds: Array.from(friendIds),
-    postsCount: posts?.length,
-    posts: posts?.map(p => ({ id: p.id, content: p.content?.substring(0, 30), user_id: p.user_id })),
-    acceptedFriendsCount: friendIds.size - 1,
-    error 
-  });
+  if (error) {
+    console.error("Error fetching posts:", error);
+  }
 
   return (
     <div className="min-h-screen relative">
       {/* 3D Particle Background */}
-      <ParticleBackground color="#9783e7" count={400} shape="box" />
-      <div className="relative z-10 max-w-2xl mx-auto py-10 px-4 space-y-6">
+      <ParticleBackground color="#9783e7" count={200} shape="box" />
+      <div className="relative z-10 max-w-2xl mx-auto py-10 px-4 space-y-6 pb-24">
         {/* Header */}
         <div className="text-center mb-6 sm:mb-8">
           <div className="flex items-center justify-center gap-2 mb-2">

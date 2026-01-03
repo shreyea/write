@@ -5,6 +5,10 @@ import { User, Users, FileText, Calendar } from "lucide-react";
 import Link from "next/link";
 import ParticleBackground from "../components/ParticleBackground";
 
+// Force dynamic rendering to prevent caching issues
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function ProfilePage() {
   const supabase = await createSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -61,8 +65,8 @@ export default async function ProfilePage() {
 
   return (
     <div className="min-h-screen relative">
-      <ParticleBackground color="#ece198" count={300} shape="sphere" />
-      <div className="relative z-10 max-w-7xl mx-auto py-10 px-4">
+      <ParticleBackground color="#ece198" count={150} shape="sphere" />
+      <div className="relative z-10 max-w-7xl mx-auto py-10 px-4 pb-24">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-black bg-gradient-to-r from-[#A5B4FC] to-[#C8A2C8] bg-clip-text text-transparent mb-2">

@@ -2,7 +2,7 @@
 
 import { addComment } from "@/actions/comment";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { User, Send } from "lucide-react";
 
 export default function CommentSection({
@@ -14,6 +14,7 @@ export default function CommentSection({
 }) {
   const router = useRouter();
   const [text, setText] = useState("");
+  const [isPending, startTransition] = useTransition();
 
   return (
     <div className="space-y-3 pt-3 border-t border-white/10">
@@ -32,12 +33,14 @@ export default function CommentSection({
       ))}
 
       <form
-        onSubmit={async (e) => {
+        onSubmit={(e) => {
           e.preventDefault();
           if (!text.trim()) return;
-          await addComment(postId, text);
-          setText("");
-          router.refresh();
+          startTransition(async () => {
+            await addComment(postId, text);
+            setText("");
+            router.refresh();
+          });
         }}
         className="flex flex-wrap gap-2 mt-3"
       >
@@ -45,14 +48,16 @@ export default function CommentSection({
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Add a comment..."
-          className="flex-1 min-w-[200px] bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm outline-none text-white placeholder-white/40 focus:border-[#A5B4FC]/50 transition-all"
+          disabled={isPending}
+          className="flex-1 min-w-[200px] bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm outline-none text-white placeholder-white/40 focus:border-[#A5B4FC]/50 transition-all disabled:opacity-50"
         />
         <button 
           type="submit"
-          className="px-3 sm:px-4 py-2 bg-[#A5B4FC]/20 text-[#A5B4FC] rounded-xl text-sm font-semibold hover:bg-[#A5B4FC]/30 transition-all border border-[#A5B4FC]/30 flex items-center gap-1.5 shrink-0"
+          disabled={isPending || !text.trim()}
+          className="px-3 sm:px-4 py-2 bg-[#A5B4FC]/20 text-[#A5B4FC] rounded-xl text-sm font-semibold hover:bg-[#A5B4FC]/30 transition-all border border-[#A5B4FC]/30 flex items-center gap-1.5 shrink-0 disabled:opacity-50"
         >
           <Send size={16} />
-          <span className="hidden sm:inline">Send</span>
+          <span className="hidden sm:inline">{isPending ? 'Sending...' : 'Send'}</span>
         </button>
       </form>
     </div>

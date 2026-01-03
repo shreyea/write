@@ -31,8 +31,8 @@ export default function Search() {
 
   return (
     <div className="min-h-screen relative">
-      <ParticleBackground color="#9783e7" count={300} shape="sphere" />
-      <div className="relative z-10 w-full max-w-2xl mx-auto py-6 sm:py-10 px-3 sm:px-4">
+      <ParticleBackground color="#9783e7" count={150} shape="sphere" />
+      <div className="relative z-10 w-full max-w-2xl mx-auto py-6 sm:py-10 px-3 sm:px-4 pb-24">
         <div className="text-center mb-4 sm:mb-6 md:mb-8">
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black bg-gradient-to-r from-[#A5B4FC] to-[#C8A2C8] bg-clip-text text-transparent mb-2 flex items-center justify-center gap-2">
             <SearchIcon size={24} className="sm:w-7 sm:h-7 md:w-9 md:h-9" /> 

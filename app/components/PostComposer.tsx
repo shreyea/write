@@ -16,15 +16,16 @@ export default function PostComposer() {
         e.preventDefault();
         if (!content.trim()) return;
         try {
-          console.log("Creating post with content:", content);
           await createPost(content, file);
-          console.log("Post created, refreshing...");
           setContent("");
           setFile(undefined);
+          // Reset file input
+          const fileInput = e.currentTarget.querySelector('input[type="file"]') as HTMLInputElement;
+          if (fileInput) fileInput.value = '';
           router.refresh();
         } catch (error: any) {
-          console.error("Error posting - Full error:", error);
-          alert(`Failed to create post: ${error.message || JSON.stringify(error)}`);
+          console.error("Error posting:", error);
+          alert(`Failed to create post: ${error.message || 'Unknown error'}`);
         }
       }}
       className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl hover:shadow-2xl transition-all duration-300"
@@ -41,6 +42,19 @@ export default function PostComposer() {
           rows={3}
         />
       </div>
+      {file && (
+        <div className="mb-3 p-2 rounded-lg bg-[#A5B4FC]/10 border border-[#A5B4FC]/30 flex items-center gap-2">
+          <Image size={16} className="text-[#A5B4FC]" />
+          <span className="text-xs text-[#A5B4FC] truncate flex-1">{file.name}</span>
+          <button
+            type="button"
+            onClick={() => setFile(undefined)}
+            className="text-xs text-white/60 hover:text-white"
+          >
+            ✕
+          </button>
+        </div>
+      )}
       <div className="flex flex-wrap justify-between items-center gap-2">
         <label className="cursor-pointer px-3 sm:px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/20 transition-all text-xs sm:text-sm text-white/70 hover:text-white flex items-center gap-1.5 sm:gap-2 shrink-0">
           <input 
@@ -50,7 +64,7 @@ export default function PostComposer() {
             accept="image/*"
           />
           <Image size={16} className="sm:w-[18px] sm:h-[18px]" />
-          <span className="hidden sm:inline">{file ? file.name.substring(0, 15) + '...' : 'Add Photo'}</span>
+          <span className="hidden sm:inline">Add Photo</span>
         </label>
         <button 
           type="submit" 

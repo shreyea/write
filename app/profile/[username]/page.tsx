@@ -4,6 +4,10 @@ import PostItem from "@/app/components/PostItem";
 import { User, FileText } from "lucide-react";
 import ParticleBackground from "@/app/components/ParticleBackground";
 
+// Force dynamic rendering to prevent caching issues
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function Profile({ params }: any) {
   const supabase = await createSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -68,8 +72,8 @@ export default async function Profile({ params }: any) {
 
   return (
     <div className="min-h-screen relative">
-      <ParticleBackground color="#9783e7" count={400} shape="sphere" />
-      <div className="relative z-10 max-w-2xl mx-auto py-10 px-4 space-y-6">
+      <ParticleBackground color="#9783e7" count={200} shape="sphere" />
+      <div className="relative z-10 max-w-2xl mx-auto py-10 px-4 space-y-6 pb-24">
         {/* Profile Header */}
         <div className="backdrop-blur-xl bg-white/5 border border-[#A5B4FC]/20 rounded-3xl p-4 sm:p-8 hover:border-[#A5B4FC]/30 transition-all">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">

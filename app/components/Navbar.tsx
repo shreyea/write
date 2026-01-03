@@ -70,8 +70,7 @@ export default function Navbar() {
               <Mail size={22} className="transition-transform" aria-hidden="true" />
             </Link>
 
-            {/* Divider */}
-            <div className="w-px h-8 bg-white/30 mx-2" />
+            
 
             {/* Profile */}
             <Link 
@@ -88,20 +87,7 @@ export default function Navbar() {
               <User size={22} className="transition-transform" aria-hidden="true" />
             </Link>
 
-            {/* Settings */}
-            <Link 
-              href="/settings" 
-              className={`group relative p-3 rounded-full transition-all duration-300 ${
-                isActive('/settings') 
-                  ? 'bg-gradient-to-br from-[#A5B4FC] to-[#C8A2C8] text-white shadow-lg shadow-[#A5B4FC]/50 scale-110' 
-                  : 'text-[#EADEE7]/70 hover:text-white hover:bg-white/10 hover:scale-110'
-              }`}
-              aria-label="Settings"
-              aria-current={isActive('/settings') ? 'page' : undefined}
-              title="Settings"
-            >
-              <Settings size={22} className="transition-transform" aria-hidden="true" />
-            </Link>
+           
 
             {/* Logout */}
             <button 

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { User, Heart, MessageCircle, Trash2 } from "lucide-react";
 import TimeAgo from "./TimeAgo";
+import { useState, useTransition } from "react";
 
 export default function PostItem({
   post,
@@ -16,6 +17,8 @@ export default function PostItem({
   userId: string;
 }) {
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [isDeleting, setIsDeleting] = useState(false);
   const isOwner = post.user_id === userId;
   const hasLiked = post.likes?.some((like: any) => like.user_id === userId);
   const likeCount = post.likes?.length || 0;
@@ -47,15 +50,21 @@ export default function PostItem({
 
       {/* Image */}
       {post.image_url && (
-        <div className="relative rounded-2xl overflow-hidden border border-white/10">
+        <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5">
           <img
             src={post.image_url}
             alt={`Post image by @${post.profiles?.username}`}
             className="w-full max-h-96 object-cover"
             loading="lazy"
+            crossOrigin="anonymous"
             onError={(e) => {
               console.error("Image failed to load:", post.image_url);
-              e.currentTarget.style.display = 'none';
+              const target = e.currentTarget as HTMLImageElement;
+              target.style.display = 'none';
+              const parent = target.parentElement;
+              if (parent) {
+                parent.innerHTML = '<div class="p-4 text-center text-white/40 text-sm">Image failed to load</div>';
+              }
             }}
           />
         </div>
@@ -64,11 +73,14 @@ export default function PostItem({
       {/* Actions */}
       <div className="flex items-center gap-4 pt-2 border-t border-white/10">
         <button
-          onClick={async () => {
-            await toggleLike(post.id, hasLiked);
-            router.refresh();
+          onClick={() => {
+            startTransition(async () => {
+              await toggleLike(post.id, hasLiked);
+              router.refresh();
+            });
           }}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${
+          disabled={isPending}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all disabled:opacity-50 ${
             hasLiked 
               ? 'bg-red-500/20 text-red-400 border border-red-500/30' 
               : 'bg-white/5 text-[#EADEE7]/60 hover:bg-white/10 border border-[#A5B4FC]/10'
@@ -93,15 +105,23 @@ export default function PostItem({
           <button
             onClick={async () => {
               if (confirm('Delete this post?')) {
-                await deletePost(post.id);
-                router.refresh();
+                setIsDeleting(true);
+                try {
+                  await deletePost(post.id);
+                  router.refresh();
+                } catch (error: any) {
+                  console.error('Delete error:', error);
+                  alert(`Failed to delete post: ${error.message || 'Unknown error'}`);
+                  setIsDeleting(false);
+                }
               }
             }}
-            className="text-xs px-3 py-1.5 rounded-full bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/30 transition-all flex items-center gap-1.5"
+            disabled={isDeleting}
+            className="text-xs px-3 py-1.5 rounded-full bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/30 transition-all flex items-center gap-1.5 disabled:opacity-50"
             aria-label="Delete post"
           >
             <Trash2 size={14} />
-            Delete
+            {isDeleting ? 'Deleting...' : 'Delete'}
           </button>
         </div>
       )}
