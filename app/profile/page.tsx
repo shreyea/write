@@ -33,10 +33,14 @@ export default async function ProfilePage() {
   const { data: posts } = await supabase
     .from("posts")
     .select(`
-      id, content, image_url, created_at, user_id,
-      profiles(username),
+      id, 
+      content, 
+      image_url, 
+      created_at, 
+      user_id,
+      profiles!inner(username),
       likes(user_id),
-      comments(id, content, profiles(username))
+      comments(id, content, created_at, profiles(username))
     `)
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });

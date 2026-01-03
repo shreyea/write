@@ -56,6 +56,13 @@ export default async function Feed() {
     console.error("Error fetching posts:", error);
   }
 
+  // Debug info
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Feed - User ID:', user!.id);
+    console.log('Feed - Friend IDs:', Array.from(friendIds));
+    console.log('Feed - Posts count:', posts?.length || 0);
+  }
+
   return (
     <div className="min-h-screen relative">
       {/* 3D Particle Background */}

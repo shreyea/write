@@ -47,4 +47,8 @@ export async function addComment(
   }
   
   revalidatePath("/feed");
+  revalidatePath("/profile");
+  revalidatePath("/profile/[username]");
+  
+  return { success: true };
 }

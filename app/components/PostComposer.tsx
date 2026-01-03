@@ -2,13 +2,14 @@
 
 import { createPost } from "@/actions/post";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Edit3, Image, Send } from "lucide-react";
 
 export default function PostComposer() {
   const router = useRouter();
   const [content, setContent] = useState("");
   const [file, setFile] = useState<File>();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <form
@@ -19,9 +20,10 @@ export default function PostComposer() {
           await createPost(content, file);
           setContent("");
           setFile(undefined);
-          // Reset file input
-          const fileInput = e.currentTarget.querySelector('input[type="file"]') as HTMLInputElement;
-          if (fileInput) fileInput.value = '';
+          // Reset file input safely
+          if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+          }
           router.refresh();
         } catch (error: any) {
           console.error("Error posting:", error);
@@ -58,6 +60,7 @@ export default function PostComposer() {
       <div className="flex flex-wrap justify-between items-center gap-2">
         <label className="cursor-pointer px-3 sm:px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/20 transition-all text-xs sm:text-sm text-white/70 hover:text-white flex items-center gap-1.5 sm:gap-2 shrink-0">
           <input 
+            ref={fileInputRef}
             type="file" 
             onChange={e => setFile(e.target.files?.[0])} 
             className="hidden"

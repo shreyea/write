@@ -48,4 +48,7 @@ export async function toggleLike(
   
   revalidatePath("/feed");
   revalidatePath("/profile");
+  revalidatePath("/profile/[username]");
+  
+  return { success: true };
 }
